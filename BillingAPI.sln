@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BillingAPI", "BillingAPI\BillingAPI.csproj", "{C13D1EF4-F631-44E1-91C5-37DA15EBB04A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingApiUnitTests", "BillingApiUnitTests\BillingApiUnitTests.csproj", "{B892D8F8-533A-40FA-82AC-D4AB441C54C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C13D1EF4-F631-44E1-91C5-37DA15EBB04A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C13D1EF4-F631-44E1-91C5-37DA15EBB04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C13D1EF4-F631-44E1-91C5-37DA15EBB04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C13D1EF4-F631-44E1-91C5-37DA15EBB04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B892D8F8-533A-40FA-82AC-D4AB441C54C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B892D8F8-533A-40FA-82AC-D4AB441C54C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B892D8F8-533A-40FA-82AC-D4AB441C54C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B892D8F8-533A-40FA-82AC-D4AB441C54C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBF3EC29-69A2-4BA5-87BF-9934DFA9895C}
+	EndGlobalSection
+EndGlobal
