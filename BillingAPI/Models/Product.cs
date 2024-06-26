@@ -3,11 +3,14 @@ using MongoDB.Bson;
 
 namespace BillingAPI.Models
 {
-    public class Product
+    public class Product : BaseModel
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public Product(string id,string productName)
+        {
+            Id = id;
+            ProductName = productName;
+            IsDeleted = false;
+        }
 
         [BsonElement("ProductName")]
         public string ProductName { get; set; }

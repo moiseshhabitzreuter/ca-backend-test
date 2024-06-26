@@ -7,7 +7,7 @@ namespace BillingApiUnitTests.Models
         [Fact]
         public void ProductId_Should_Set_And_Get_Correctly()
         {
-            var product = new Product();
+            var product = new Product("test","test");
             var expectedId = "IdTest";
 
             product.Id = expectedId;
@@ -18,7 +18,7 @@ namespace BillingApiUnitTests.Models
         [Fact]
         public void ProductName_Should_Set_And_Get_Correctly()
         {
-            var product = new Product();
+            var product = new Product("test", "test");
             var expectedProductName = "ProductTest";
 
             product.ProductName = expectedProductName;

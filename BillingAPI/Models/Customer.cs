@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace BillingAPI.Models
 {
-    public class Customer
+    public class Customer : BaseModel
     {
         public Customer(string id, string name, string email, string address)
         {
@@ -11,11 +11,8 @@ namespace BillingAPI.Models
             Name = name;
             Email = email;
             Address = address;
+            IsDeleted = false;
         }
-
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
 
         [BsonElement("Name")]
         public string Name { get; set; }
