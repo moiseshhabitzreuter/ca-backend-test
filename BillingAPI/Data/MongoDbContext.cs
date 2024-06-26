@@ -13,7 +13,7 @@ namespace BillingAPI.Data
             _database = client.GetDatabase(configuration.GetSection("ConnectionStrings:DatabaseName").Value);
         }
 
-        public IMongoCollection<Customer> Customers => _database.GetCollection<Customer>("Customers");
-        public IMongoCollection<Product> Products => _database.GetCollection<Product>("Products");
+        public IMongoCollection<Customer> Customers => _database.GetCollection<Customer>("customers");
+        public IMongoCollection<Product> Products => _database.GetCollection<Product>("products");
     }
 }
