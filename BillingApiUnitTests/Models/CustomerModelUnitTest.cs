@@ -5,36 +5,20 @@ namespace BillingApiUnitTests.Models
     public class CustomerModelUnitTest
     {
         [Fact]
-        public void Customer_Name_Should_Set_And_Get_Correctly()
+        public void Customer_ShouldBeInitializedWithValidParameters()
         {
-            var customer = new Customer("testId", "testName", "testEmail", "testAddress");
-            var expectedName = "Johnny Test";
+            var id = "testeid";
+            var name = "nameteste";
+            var email = "customer@teste.com";
+            var address = "Rua Teste 43";
 
-            customer.Name = expectedName;
+            var customer = new Customer(id, name, email, address);
 
-            Assert.Equal(expectedName, customer.Name);
-        }
-
-        [Fact]
-        public void Customer_Email_Should_Set_And_Get_Correctly()
-        {
-            var customer = new Customer("testId", "testName", "testEmail", "testAddress");
-            var expectedEmail = "test@example.com";
-
-            customer.Email = expectedEmail;
-
-            Assert.Equal(expectedEmail, customer.Email);
-        }
-
-        [Fact]
-        public void Customer_Address_Should_Set_And_Get_Correctly()
-        {
-            var customer = new Customer("testId", "testName", "testEmail", "testAddress");
-            var expectedAddress = "Rua Teste 21";
-
-            customer.Address = expectedAddress;
-
-            Assert.Equal(expectedAddress, customer.Address);
+            Assert.Equal(id, customer.Id);
+            Assert.Equal(name, customer.Name);
+            Assert.Equal(email, customer.Email);
+            Assert.Equal(address, customer.Address);
+            Assert.False(customer.IsDeleted);
         }
     }
 }

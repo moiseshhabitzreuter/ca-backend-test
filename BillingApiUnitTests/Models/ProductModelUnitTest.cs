@@ -5,25 +5,16 @@ namespace BillingApiUnitTests.Models
     public class ProductModelUnitTest
     {
         [Fact]
-        public void ProductId_Should_Set_And_Get_Correctly()
+        public void Product_ShouldBeInitializedWithValidParameters()
         {
-            var product = new Product("test","test");
-            var expectedId = "IdTest";
+            var id = "testeid";
+            var productName = "productnameteste";
 
-            product.Id = expectedId;
+            var product = new Product(id, productName);
 
-            Assert.Equal(expectedId, product.Id);
-        }
-
-        [Fact]
-        public void ProductName_Should_Set_And_Get_Correctly()
-        {
-            var product = new Product("test", "test");
-            var expectedProductName = "ProductTest";
-
-            product.ProductName = expectedProductName;
-
-            Assert.Equal(expectedProductName, product.ProductName);
+            Assert.Equal(id, product.Id);
+            Assert.Equal(productName, product.ProductName);
+            Assert.False(product.IsDeleted);
         }
     }
 }
