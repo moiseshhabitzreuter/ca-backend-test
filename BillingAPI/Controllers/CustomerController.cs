@@ -46,8 +46,13 @@ namespace BillingAPI.Controllers
                 return NotFound();
             }
 
-            //Trocar ReplaceOne por Update
-            _context.Customers.ReplaceOne(customer => customer.Id == id, customerIn);
+            var filter = Builders<Customer>.Filter.Eq(c => c.Id, id);
+            var update = Builders<Customer>.Update
+                .Set(c => c.Name, customerIn.Name)
+                .Set(c => c.Email, customerIn.Email)
+                .Set(c => c.Address, customerIn.Address);
+
+            _context.Customers.UpdateOne(filter, update);
 
             return NoContent();
         }
@@ -61,9 +66,12 @@ namespace BillingAPI.Controllers
             {
                 return NotFound();
             }
-            //Trocar ReplaceOne por Update
-            customerToDelete.IsDeleted = true;
-            _context.Customers.ReplaceOne(customer => customer.Id == id, customerToDelete);
+
+            var filter = Builders<Customer>.Filter.Eq(c => c.Id, id);
+            var update = Builders<Customer>.Update
+                .Set(c => c.IsDeleted, true);
+
+            _context.Customers.UpdateOne(filter, update);
 
             return NoContent();
         }

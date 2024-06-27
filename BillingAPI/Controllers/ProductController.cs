@@ -46,8 +46,9 @@ namespace BillingAPI.Controllers
                 return NotFound();
             }
 
-            //Trocar ReplaceOne por Update
-            _context.Products.ReplaceOne(product => product.Id == id, productIn);
+            var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
+            var update = Builders<Product>.Update
+                .Set(c => c.ProductName, productIn.ProductName);
 
             return NoContent();
         }
@@ -61,9 +62,10 @@ namespace BillingAPI.Controllers
             {
                 return NotFound();
             }
-            //Trocar ReplaceOne por Update
-            productToDelete.IsDeleted = true;
-            _context.Products.ReplaceOne(product => product.Id == id, productToDelete);
+
+            var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
+            var update = Builders<Product>.Update
+                .Set(c => c.IsDeleted, true);
 
             return NoContent();
         }

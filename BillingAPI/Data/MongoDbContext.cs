@@ -15,5 +15,9 @@ namespace BillingAPI.Data
 
         public IMongoCollection<Customer> Customers => _database.GetCollection<Customer>("customers");
         public IMongoCollection<Product> Products => _database.GetCollection<Product>("products");
+
+        public IMongoCollection<Billing> Billings => _database.GetCollection<Billing>("billings");
+
+        public IMongoCollection<BillingLine> BillingLines => _database.GetCollection<BillingLine>("billingLines");
     }
 }
