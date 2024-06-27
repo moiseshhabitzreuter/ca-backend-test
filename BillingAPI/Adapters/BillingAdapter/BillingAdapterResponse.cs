@@ -4,13 +4,13 @@ namespace BillingAPI.Adapters.BillingAdapter
 {
     public class BillingAdapterResponse
     {
-        public BillingAdapterResponse(List<Billing> billingsToCreate, List<BillingLine> billingLinesToCreate)
+        public BillingAdapterResponse(Billing billingToCreate, List<BillingLine> billingLinesToCreate)
         {
-            BillingsToCreate = billingsToCreate;
+            BillingToCreate = billingToCreate;
             BillingLinesToCreate = billingLinesToCreate;
         }
 
-        public List<Billing> BillingsToCreate { get; set; }
+        public Billing BillingToCreate { get; set; }
         public List<BillingLine> BillingLinesToCreate { get; set; }
     }
 }

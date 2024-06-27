@@ -1,22 +1,22 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace BillingAPI.DTO
 {
     public class BillingLineDto
     {
-        [JsonPropertyName("productId")]
+        [JsonProperty("productId")]
         public string ProductId { get; set; }
 
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonPropertyName("quantity")]
+        [JsonProperty("quantity")]
         public int Quantity { get; set; }
 
-        [JsonPropertyName("unit_price")]
+        [JsonProperty("unit_price")]
         public decimal UnitPrice { get; set; }
 
-        [JsonPropertyName("subtotal")]
+        [JsonProperty("subtotal")]
         public decimal Subtotal { get; set; }
     }
 }

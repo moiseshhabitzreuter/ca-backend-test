@@ -1,29 +1,29 @@
 ﻿using BillingAPI.Models;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace BillingAPI.DTO
 {
     public class BillingDTO
     {
-        [JsonPropertyName("invoiceNumber")]
+        [JsonProperty("invoice_number")]
         public string InvoiceNumber { get; set; }
 
-        [JsonPropertyName("customer")]
+        [JsonProperty("customer")]
         public Customer Customer { get; set; }
 
-        [JsonPropertyName("date")]
+        [JsonProperty("date")]
         public DateTime Date { get; set; }
 
-        [JsonPropertyName("due_date")]
+        [JsonProperty("due_date")]
         public DateTime DueDate { get; set; }
 
-        [JsonPropertyName("total_amount")]
+        [JsonProperty("total_amount")]
         public decimal TotalAmount { get; set; }
 
-        [JsonPropertyName("currency")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
 
-        [JsonPropertyName("lines")]
+        [JsonProperty("lines")]
         public List<BillingLineDto> Lines { get; set; }
     }
 }
