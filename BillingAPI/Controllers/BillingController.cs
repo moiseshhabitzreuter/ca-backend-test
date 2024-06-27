@@ -29,7 +29,7 @@ namespace BillingAPI.Controllers
         {
             try
             {
-                var apiResponse = _httpClient.GetStringAsync("https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing").Result;
+                var apiResponse = _httpClient.GetStringAsync("apiurl").Result;
 
                 var billingDTOs = JsonConvert.DeserializeObject<List<BillingDTO>>(apiResponse);
 
