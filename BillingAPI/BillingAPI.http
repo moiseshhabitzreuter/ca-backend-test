@@ -1,0 +1,6 @@
+@BillingAPI_HostAddress = http://localhost:5213
+
+GET {{BillingAPI_HostAddress}}/customerBilling/
+Accept: application/json
+
+###
