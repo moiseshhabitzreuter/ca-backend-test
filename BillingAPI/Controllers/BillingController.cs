@@ -27,15 +27,31 @@ namespace BillingAPI.Controllers
         [HttpPost]
         public IActionResult CreateBillings()
         {
-            var apiResponse = _httpClient.GetStringAsync("https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing").Result;
-            var billingDTOs = JsonConvert.DeserializeObject<List<BillingDTO>>(apiResponse);
-
-            foreach (var billing in billingDTOs)
+            try
             {
-                InsertBilling(billing);
-            }
+                var apiResponse = _httpClient.GetStringAsync("https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing").Result;
 
-            return Ok(_response);
+                var billingDTOs = JsonConvert.DeserializeObject<List<BillingDTO>>(apiResponse);
+
+                foreach (var billing in billingDTOs)
+                {
+                    InsertBilling(billing);
+                }
+
+                return Ok(_response);
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(503, "Service Unavailable: Unable to reach the external API.");
+            }
+            catch (JsonException ex)
+            {
+                return StatusCode(500, "Internal Server Error: Invalid JSON response from the external API.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
 
         private void InsertBilling(BillingDTO billingDTO)
