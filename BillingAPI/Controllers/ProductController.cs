@@ -16,7 +16,7 @@ namespace BillingAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("{id:length(24)}", Name = "GetProduct")]
+        [HttpGet("{id}", Name = "GetProduct")]
         public IActionResult GetProduct(string id)
         {
             var product = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
@@ -36,7 +36,7 @@ namespace BillingAPI.Controllers
             return CreatedAtRoute("GetProduct", new { id = product.Id.ToString() }, product);
         }
 
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateProduct(string id, [FromBody] Product productIn)
         {
             var product = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
@@ -50,10 +50,12 @@ namespace BillingAPI.Controllers
             var update = Builders<Product>.Update
                 .Set(c => c.ProductName, productIn.ProductName);
 
+            _context.Products.UpdateOne(filter, update);
+
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteProduct(string id)
         {
             var productToDelete = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
@@ -66,6 +68,8 @@ namespace BillingAPI.Controllers
             var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
             var update = Builders<Product>.Update
                 .Set(c => c.IsDeleted, true);
+
+            _context.Products.UpdateOne(filter, update);
 
             return NoContent();
         }
