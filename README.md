@@ -4,6 +4,7 @@ Tecnologias Utilizadas
 ---------------------
 * .NET 8.0
 * MongoDB
+* xUnit em testes unitários
 * Postman para consulta de api externa
 ---------------------
 Chamadas de Serviços
