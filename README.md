@@ -1,56 +1,80 @@
-**Teste para vaga de Desenvolvimento Back-end .NET**
+**API de faturamento de clientes**
 ---------------------
-Criar uma API REST para gerenciar faturamento de clientes.
+Tecnologias Utilizadas
 ---------------------
-**Funcionalidades 🛠️**
-
-* Customer: CRUD; Criar um cadastro do cliente com os seguintes campos:
-    * Id;
-    * Name;
-    * Email;
-    * Address;
-    * **Todos os campos são de preenchimento obrigatório.**
-* Produtos: CRUD; Criar um cadastro de produtos com os seguintes campos:
-    * Id;
-    * Nome do produto;
-    * **Todos os campos são de preenchimento obrigatório.**
-* Controle de conferência e importação de billing.
-    * Utilizar postman para consulta dos dados da API’s para criação das tabelas de billing e billingLines.
-	  * Após consulta, e criação do passo anterior, inserir no banco de dados o primeiro registro do retorno da API de billing para criação de cliente e produto através do swagger ou dataseed.
-
-    * Utilizar as API’s para consumo dos dados a partir da aplicação que está criada e fazer as seguintes verificações:
-      * Se o cliente e o produto existirem, inserir o registro do billing e billingLines no DB local.
-      * Caso se o cliente existir ou só o produto existir, deve retornar um erro na aplicação informando sobre a criação do registro faltante.
-      * Criar exceptions tratando mal funcionamento ou interrupção de serviço quando API estiver fora.
-* Lista de API’s :
-	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
-	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
-	* Post https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
-	* Delete https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
-	* PUT https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
+* .NET 8.0
+* MongoDB
+* Postman para consulta de api externa
 ---------------------
-**Requisitos 💻**
-
-* A aplicação deverá ser desenvolvida usando .NET a partir da versão 5+;
-* Modelagem de dados pode ser no banco de dados de sua preferência, podendo ser um banco relacional ou não relacional (mongodb, SQL Server, PostgreSQL, MySQL, etc);
-* Persistência de dados no banco deverá ser feita utilizando o Entity Framework Core;
-* O retorno da API deverá ser em formato JSON;
-* Utilizar as requisições GET, POST, PUT ou DELETE, conforme a melhor prática;
-* Criar o README do projeto descrevendo as tecnologias utilizadas, chamadas dos serviços e configurações necessário para executar a aplicação.
+Chamadas de Serviços
 ---------------------
-**Pontos Extras ⭐**
-
-* Desenvolvimento baseado em TDD;
-* Práticas de modelagem de projeto;
-* Criar e configurar o Swagger da API de acordo com as melhores práticas;
-* Criar uma API para extração dos dados de faturamento.
-* Sugestões serão bem vindas.
+Billing
+------------
+* Inserir billings no banco de dados
+* URL: /api/Billing
+* Método: POST
+* Descrição: Faz uma requisição na api externa de billings e insere o registro de billing e billingLines caso o cliente e o produto existam no banco de dados.
 ---------------------
-**Submissão do teste 📝**
+Customer
+------------
+* Buscar Cliente por Id
+* URL: /api/Customer/{id}
+* Método: GET
+* Descrição: Retorna um Cliente especifico.
+------------
+* Deletar Cliente por Id
+* URL: /api/Customer/{id}
+* Método: DELETE
+* Descrição: Deleta um Cliente especifico lógicamente, ou seja, não removendo o registro do banco mas sim atualizando uma flag isDeleted.
+------------
+* Inserir Cliente
+* URL: /api/Customer/{id}
+* Método: POST
+* Descrição: Insere um Cliente especifico baseado nos campos do Body da requisição.
+------------
+* Atualizar Cliente por Id
+* URL: /api/Customer/{id}
+* Método: PUT
+* Descrição: Atualiza um Cliente especifico baseado nos campos do Body da requisição.
+---------------------
+Product
+------------
+* Buscar Produto por Id
+* URL: /api/Product/{id}
+* Método: GET
+* Descrição: Retorna um Produto especifico.
+------------
+* Deletar Produto por Id
+* URL: /api/Product/{id}
+* Método: DELETE
+* Descrição: Deleta um Produto especifico lógicamente, ou seja, não removendo o registro do banco mas sim atualizando uma flag isDeleted.
+------------
+* Inserir Produto
+* URL: /api/Product/{id}
+* Método: POST
+* Descrição: Insere um Produto especifico baseado nos campos do Body da requisição.
+------------
+* Atualizar Produto por Id
+* URL: /api/Product/{id}
+* Método: PUT
+* Descrição: Atualiza um Produto especifico baseado nos campos do Body da requisição.
+---------------------
+Configurações para Rodar Projeto
+---------------------
+* Alterar connection string do mongodb dentro da classe appsettings.json
+* Inserir connection string da api externa de billings dentro da classe BillingController
+* ![image](https://github.com/moiseshhabitzreuter/ca-backend-test/assets/139796338/8770bf41-0594-4277-89bd-60d629c57f4d)
 
-Crie um fork do teste para acompanharmos o seu desenvolvimento através dos seus commits.
+* Alterar de https para http na opção de rodar o projeto
+* ![image](https://github.com/moiseshhabitzreuter/ca-backend-test/assets/139796338/a382b2c3-027a-4663-bf97-005bb8ad8224)
+* Rodar o projeto(F5) e utilizar a janela swagger para fazer requisições
+* Ao utilizar requisições POST e PUT, alterar flag isDeleted para false
 
 ---------------------
-Obrigado!
-
-Agradecemos sua participação no teste. Boa sorte! 😄
+Melhorias planejadas
+---------------------
+* Separação de responsabilidades para classes de serviço e repositórios
+* Melhorar cobertura de código
+* Remover campo id do body das requisições POST e PUT
+* Alterar valor default da flag isDeleted de true para false no body das requisições POST e PUT
+* Adicionar validações de email
