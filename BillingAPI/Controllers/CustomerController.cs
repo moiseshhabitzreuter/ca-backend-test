@@ -16,7 +16,7 @@ namespace BillingAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("{id:length(24)}", Name = "GetCustomer")]
+        [HttpGet("{id}", Name = "GetCustomer")]
         public IActionResult GetCustomer(string id)
         {
             var customer = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
@@ -36,7 +36,7 @@ namespace BillingAPI.Controllers
             return CreatedAtRoute("GetCustomer", new { id = customer.Id.ToString() }, customer);
         }
 
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateCustomer(string id, [FromBody] Customer customerIn)
         {
             var customer = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
@@ -57,7 +57,7 @@ namespace BillingAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCustomer(string id)
         {
             var customerToDelete = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
