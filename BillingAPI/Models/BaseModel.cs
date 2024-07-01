@@ -1,15 +1,12 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BillingAPI.Models
 {
     public class BaseModel
     {
 
-        [BsonElement("Id")]
+        [Key]
         public string Id { get; set; }
-
-        [BsonElement("isDeleted")]
         public bool IsDeleted { get; set; }
     }
 }

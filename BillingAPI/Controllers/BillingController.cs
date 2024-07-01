@@ -60,8 +60,9 @@ namespace BillingAPI.Controllers
             if (billingsAreValid)
             {
                 var adapterResponse = _billingAdapter.CreateBillingsFromDTO(billingDTO);
-                _context.Billings.InsertOne(adapterResponse.BillingToCreate);
-                _context.BillingLines.InsertMany(adapterResponse.BillingLinesToCreate);
+                _context.Billings.Add(adapterResponse.BillingToCreate);
+                _context.BillingLines.AddRange(adapterResponse.BillingLinesToCreate);
+                _context.SaveChanges();
                 _response.AddBillingInsertedSuccessfully($"{billingDTO.InvoiceNumber}");
             }
         }
@@ -76,7 +77,7 @@ namespace BillingAPI.Controllers
             }
             else
             {
-                var customer = _context.Customers.Find<Customer>(customer => customer.Id == billingDTO.Customer.Id && !customer.IsDeleted).FirstOrDefault();
+                var customer = _context.Customers.FirstOrDefault<Customer>(customer => customer.Id == billingDTO.Customer.Id && !customer.IsDeleted);
 
                 if (customer == null)
                 {
@@ -89,7 +90,7 @@ namespace BillingAPI.Controllers
             {
                 foreach (var billingLine in billingDTO.Lines)
                 {
-                    var product = _context.Products.Find<Product>(product => product.Id == billingLine.ProductId && !product.IsDeleted).FirstOrDefault();
+                    var product = _context.Products.FirstOrDefault<Product>(product => product.Id == billingLine.ProductId && !product.IsDeleted);
 
                     if (product == null)
                     {

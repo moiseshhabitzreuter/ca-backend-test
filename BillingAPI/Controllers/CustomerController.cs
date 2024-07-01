@@ -19,7 +19,7 @@ namespace BillingAPI.Controllers
         [HttpGet("{id}", Name = "GetCustomer")]
         public IActionResult GetCustomer(string id)
         {
-            var customer = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
+            var customer = _context.Customers.FirstOrDefault<Customer>(customer => customer.Id == id && !customer.IsDeleted);
 
             if (customer == null)
             {
@@ -32,47 +32,43 @@ namespace BillingAPI.Controllers
         [HttpPost]
         public IActionResult CreateCustomer([FromBody] Customer customer)
         {
-            _context.Customers.InsertOne(customer);
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
             return CreatedAtRoute("GetCustomer", new { id = customer.Id.ToString() }, customer);
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateCustomer(string id, [FromBody] Customer customerIn)
         {
-            var customer = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
+            var customer = _context.Customers.FirstOrDefault<Customer>(customer => customer.Id == id && !customer.IsDeleted);
 
-            if (customer == null)
+            //Add validation to empty list
+            if (customer is null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Customer>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Customer>.Update
-                .Set(c => c.Name, customerIn.Name)
-                .Set(c => c.Email, customerIn.Email)
-                .Set(c => c.Address, customerIn.Address);
+            customer.Address = customerIn.Address;
+            customer.Email = customerIn.Email;
+            customer.Name = customerIn.Name;
 
-            _context.Customers.UpdateOne(filter, update);
-
+            _context.SaveChanges();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteCustomer(string id)
         {
-            var customerToDelete = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
+            var customerToDelete = _context.Customers.FirstOrDefault<Customer>(customer => customer.Id == id && !customer.IsDeleted);
 
             if (customerToDelete == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Customer>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Customer>.Update
-                .Set(c => c.IsDeleted, true);
+            customerToDelete.IsDeleted = true;
 
-            _context.Customers.UpdateOne(filter, update);
-
+            _context.SaveChanges();
             return NoContent();
         }
     }

@@ -1,23 +1,32 @@
 ﻿using BillingAPI.Models;
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.EntityFrameworkCore.Extensions;
+using System.Numerics;
+using System.Reflection.Emit;
 
 namespace BillingAPI.Data
 {
-    public class MongoDbContext
+    public class MongoDbContext : DbContext
     {
-        private readonly IMongoDatabase _database;
+        public IConfiguration _configuration;
 
-        public MongoDbContext(IConfiguration configuration)
+        public MongoDbContext(DbContextOptions<MongoDbContext> options)
+            : base(options)
         {
-            var client = new MongoClient(configuration.GetConnectionString("MongoDb"));
-            _database = client.GetDatabase(configuration.GetSection("ConnectionStrings:DatabaseName").Value);
         }
 
-        public IMongoCollection<Customer> Customers => _database.GetCollection<Customer>("customers");
-        public IMongoCollection<Product> Products => _database.GetCollection<Product>("products");
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Billing> Billings { get; set; }
+        public DbSet<BillingLine> BillingLines { get; set; }
 
-        public IMongoCollection<Billing> Billings => _database.GetCollection<Billing>("billings");
-
-        public IMongoCollection<BillingLine> BillingLines => _database.GetCollection<BillingLine>("billingLines");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Customer>().ToCollection("customers");
+            modelBuilder.Entity<Product>().ToCollection("products");
+            modelBuilder.Entity<Billing>().ToCollection("billings");
+            modelBuilder.Entity<BillingLine>().ToCollection("billingLines");
+        }
     }
 }

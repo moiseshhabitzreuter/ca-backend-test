@@ -1,18 +1,17 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BillingAPI.Models
 {
     public class Product : BaseModel
     {
-        public Product(string id,string productName)
+        public Product(string id, string productName)
         {
             Id = id;
             ProductName = productName;
             IsDeleted = false;
         }
 
-        [BsonElement("ProductName")]
+        [Required]
         public string ProductName { get; set; }
     }
 }

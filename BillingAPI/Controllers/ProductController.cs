@@ -19,7 +19,7 @@ namespace BillingAPI.Controllers
         [HttpGet("{id}", Name = "GetProduct")]
         public IActionResult GetProduct(string id)
         {
-            var product = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
+            var product = _context.Products.FirstOrDefault<Product>(product => product.Id == id && !product.IsDeleted);
 
             if (product == null)
             {
@@ -32,45 +32,40 @@ namespace BillingAPI.Controllers
         [HttpPost]
         public IActionResult CreateProduct([FromBody] Product product)
         {
-            _context.Products.InsertOne(product);
+            _context.Products.Add(product);
+            _context.SaveChanges();
             return CreatedAtRoute("GetProduct", new { id = product.Id.ToString() }, product);
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateProduct(string id, [FromBody] Product productIn)
         {
-            var product = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
+            var product = _context.Products.FirstOrDefault<Product>(product => product.Id == id && !product.IsDeleted);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Product>.Update
-                .Set(c => c.ProductName, productIn.ProductName);
+            product.ProductName = productIn.ProductName;
 
-            _context.Products.UpdateOne(filter, update);
-
+            _context.SaveChanges();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(string id)
         {
-            var productToDelete = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
+            var productToDelete = _context.Products.FirstOrDefault<Product>(product => product.Id == id && !product.IsDeleted);
 
             if (productToDelete == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Product>.Update
-                .Set(c => c.IsDeleted, true);
+            productToDelete.IsDeleted = true;
 
-            _context.Products.UpdateOne(filter, update);
-
+            _context.SaveChanges();
             return NoContent();
         }
     }

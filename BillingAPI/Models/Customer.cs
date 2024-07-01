@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BillingAPI.Models
 {
@@ -14,13 +13,13 @@ namespace BillingAPI.Models
             IsDeleted = false;
         }
 
-        [BsonElement("Name")]
+        [Required]
         public string Name { get; set; }
 
-        [BsonElement("Email")]
+        [Required]
         public string Email { get; set; }
 
-        [BsonElement("Address")]
+        [Required]
         public string Address { get; set; }
     }
 }
