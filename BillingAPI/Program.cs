@@ -19,6 +19,7 @@ namespace BillingAPI
                 var databaseName = builder.Configuration.GetSection("ConnectionStrings:DatabaseName").Value;
                 var connectionString = builder.Configuration.GetConnectionString("MongoDb");
                 options.UseMongoDB(connectionString, databaseName);
+                options.EnableSensitiveDataLogging();
             });
             builder.Services.AddControllers();
             builder.Services.AddHttpClient<BillingController>();
