@@ -1,7 +1,6 @@
-﻿using BillingAPI.Data;
+﻿using BillingAPI.Interfaces;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace BillingAPI.Controllers
 {
@@ -9,17 +8,17 @@ namespace BillingAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly MongoDbContext _context;
+        private readonly IProductService _productService;
 
-        public ProductController(MongoDbContext context)
+        public ProductController(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         [HttpGet("{id}", Name = "GetProduct")]
-        public IActionResult GetProduct(string id)
+        public async Task<IActionResult> GetProduct(string id)
         {
-            var product = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
+            var product = await _productService.GetProductByIdAsync(id);
 
             if (product == null)
             {
@@ -30,46 +29,38 @@ namespace BillingAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProduct([FromBody] Product product)
+        public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {
-            _context.Products.InsertOne(product);
+            await _productService.CreateProductAsync(product);
             return CreatedAtRoute("GetProduct", new { id = product.Id.ToString() }, product);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(string id, [FromBody] Product productIn)
+        public async Task<IActionResult> UpdateProduct(string id, [FromBody] Product productIn)
         {
-            var product = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
+            var product = await _productService.GetProductByIdAsync(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Product>.Update
-                .Set(c => c.ProductName, productIn.ProductName);
-
-            _context.Products.UpdateOne(filter, update);
+            await _productService.UpdateProductAsync(id, productIn);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(string id)
+        public async Task<IActionResult> DeleteProduct(string id)
         {
-            var productToDelete = _context.Products.Find<Product>(product => product.Id == id && !product.IsDeleted).FirstOrDefault();
+            var productToDelete = await _productService.GetProductByIdAsync(id);
 
             if (productToDelete == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Product>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Product>.Update
-                .Set(c => c.IsDeleted, true);
-
-            _context.Products.UpdateOne(filter, update);
+            await _productService.DeleteProductAsync(id);
 
             return NoContent();
         }

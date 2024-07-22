@@ -1,6 +1,8 @@
 
 using BillingAPI.Controllers;
 using BillingAPI.Data;
+using BillingAPI.Interfaces;
+using BillingAPI.Services;
 using Microsoft.OpenApi.Models;
 
 namespace BillingAPI
@@ -14,6 +16,8 @@ namespace BillingAPI
             // Add services to the container.
 
             builder.Services.AddSingleton<MongoDbContext>();
+            builder.Services.AddTransient<IProductRepository, ProductRepository>();
+            builder.Services.AddTransient<IProductService, ProductService>();
             builder.Services.AddControllers();
             builder.Services.AddHttpClient<BillingController>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
