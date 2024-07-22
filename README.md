@@ -74,7 +74,7 @@ Configurações para Rodar Projeto
 ---------------------
 Melhorias planejadas
 ---------------------
-* Separação de responsabilidades para classes de serviço e repositórios
+* ~~Separação de responsabilidades para classes de serviço e repositórios~~ - Feito
 * Melhorar cobertura de código
 * Remover campo id do body das requisições POST e PUT
 * Alterar valor default da flag isDeleted de true para false no body das requisições POST e PUT
