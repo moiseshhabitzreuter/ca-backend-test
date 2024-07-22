@@ -1,5 +1,5 @@
 ﻿using BillingAPI.Data;
-using BillingAPI.Interfaces;
+using BillingAPI.Interfaces.Services;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;

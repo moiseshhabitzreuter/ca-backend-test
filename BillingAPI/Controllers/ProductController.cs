@@ -1,4 +1,4 @@
-﻿using BillingAPI.Interfaces;
+﻿using BillingAPI.Interfaces.Services;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 

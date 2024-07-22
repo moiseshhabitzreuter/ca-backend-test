@@ -1,4 +1,4 @@
-﻿using BillingAPI.Interfaces;
+﻿using BillingAPI.Interfaces.Data;
 using BillingAPI.Models;
 using MongoDB.Driver;
 

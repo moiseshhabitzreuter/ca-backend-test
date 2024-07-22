@@ -1,4 +1,5 @@
-﻿using BillingAPI.Interfaces;
+﻿using BillingAPI.Interfaces.Data;
+using BillingAPI.Interfaces.Services;
 using BillingAPI.Models;
 
 namespace BillingAPI.Services

@@ -1,8 +1,8 @@
 ﻿using BillingAPI.Models;
 
-namespace BillingAPI.Interfaces
+namespace BillingAPI.Interfaces.Services
 {
-    public interface ICustomerRepository
+    public interface ICustomerService
     {
         public Task<Customer> GetCustomerByIdAsync(string id);
 

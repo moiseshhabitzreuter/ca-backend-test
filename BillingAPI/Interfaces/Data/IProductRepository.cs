@@ -1,8 +1,8 @@
 ﻿using BillingAPI.Models;
 
-namespace BillingAPI.Interfaces
+namespace BillingAPI.Interfaces.Data
 {
-    public interface IProductService
+    public interface IProductRepository
     {
         public Task<Product> GetProductByIdAsync(string id);
 
