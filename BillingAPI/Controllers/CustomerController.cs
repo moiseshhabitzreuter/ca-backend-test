@@ -1,4 +1,5 @@
 ﻿using BillingAPI.Data;
+using BillingAPI.Interfaces.Services;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -9,17 +10,17 @@ namespace BillingAPI.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly MongoDbContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomerController(MongoDbContext context)
+        public CustomerController(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         [HttpGet("{id}", Name = "GetCustomer")]
-        public IActionResult GetCustomer(string id)
+        public async Task<IActionResult> GetCustomer(string id)
         {
-            var customer = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
+            var customer = await _customerService.GetCustomerByIdAsync(id);
 
             if (customer == null)
             {
@@ -30,48 +31,38 @@ namespace BillingAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
         {
-            _context.Customers.InsertOne(customer);
+            await _customerService.CreateCustomerAsync(customer);
             return CreatedAtRoute("GetCustomer", new { id = customer.Id.ToString() }, customer);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCustomer(string id, [FromBody] Customer customerIn)
+        public async Task<IActionResult> UpdateCustomer(string id, [FromBody] Customer customerIn)
         {
-            var customer = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
+            var customer = await _customerService.GetCustomerByIdAsync(id);
 
             if (customer == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Customer>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Customer>.Update
-                .Set(c => c.Name, customerIn.Name)
-                .Set(c => c.Email, customerIn.Email)
-                .Set(c => c.Address, customerIn.Address);
-
-            _context.Customers.UpdateOne(filter, update);
+            await _customerService.UpdateCustomerAsync(id, customerIn);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCustomer(string id)
+        public async Task<IActionResult> DeleteCustomer(string id)
         {
-            var customerToDelete = _context.Customers.Find<Customer>(customer => customer.Id == id && !customer.IsDeleted).FirstOrDefault();
+            var customerToDelete = await _customerService.GetCustomerByIdAsync(id);
 
             if (customerToDelete == null)
             {
                 return NotFound();
             }
 
-            var filter = Builders<Customer>.Filter.Eq(c => c.Id, id);
-            var update = Builders<Customer>.Update
-                .Set(c => c.IsDeleted, true);
-
-            _context.Customers.UpdateOne(filter, update);
+            await _customerService.DeleteCustomerAsync(id);
 
             return NoContent();
         }
