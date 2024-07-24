@@ -1,8 +1,6 @@
-﻿using BillingAPI.Data;
-using BillingAPI.Interfaces.Services;
+﻿using BillingAPI.Interfaces.Services;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace BillingAPI.Controllers
 {
